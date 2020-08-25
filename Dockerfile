@@ -19,4 +19,6 @@ RUN mv -f ~/chromedriver /usr/local/bin/chromedriver
 RUN chown root:root /usr/local/bin/chromedriver
 RUN chmod 0755 /usr/local/bin/chromedriver
 
+RUN pip install -r requirement.txt
+
 CMD ["python","main.py"]

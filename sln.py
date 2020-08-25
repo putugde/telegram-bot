@@ -1,6 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+
+chrome_options = Options()
+chrome_options.add_argument("--headless")
 
 import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -10,7 +14,7 @@ logger = logging.getLogger('selenium')
 class Selenium():
     def start(self):
         logger.info('Selenium Started !')
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(options=chrome_options)
 
     def search_gimg(self, keyword, index):
         logger.info(f'Search google image with keyword {keyword} and index {index}')
