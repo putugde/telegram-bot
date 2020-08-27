@@ -4,6 +4,8 @@ load_dotenv()
 
 from sln import Selenium
 
+from numpy import random
+
 from telegram.ext import Updater
 from telegram.ext import CommandHandler, MessageHandler, Filters
 
@@ -33,22 +35,36 @@ def caps(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
 
 def get_google_pic(update, context):
-    try:
-        if len(context.args) > 1:
-            index = context.args[1]
-            int(index)
-        else:
-            index = 1
-        keyword = context.args[0]
-        keyword = keyword.replace("-"," ")
-        imgurl = browser.search_gimg(keyword, index)
-        context.bot.send_photo(chat_id=update.effective_chat.id, photo=imgurl)
-    except IndexError:
+    # Argument Validation
+    if len(context.args) == 0:
         error_text = 'wrong arguments, try /gimg <keyword> <index>'
         context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
-    except ValueError:
-        error_text = 'index must be a number'
-        context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
+    else:
+        args = context.args
+        if len(args) > 1 and isinstance(args[-1], int):
+            index = int(args.pop())
+        else:
+            index = random.randint(10)
+            index += 1
+            
+        keyword = ' '.join(args)
+
+        if int(index) > 400:
+            error_text = 'maximum index is 400'
+            context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
+        else:
+            # Handle google image related search, every 25 div
+            index_int = int(index)
+            if index_int % 25 == 0:
+                index_int += 1
+                index = str(index_int)
+
+            imgurl = browser.search_gimg(keyword, index)
+            if imgurl:
+                context.bot.send_photo(chat_id=update.effective_chat.id, photo=imgurl)
+            else:
+                error_text = 'image not found'
+                context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
 
 def main():
     start_handler = CommandHandler('start', start)
