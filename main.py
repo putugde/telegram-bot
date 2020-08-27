@@ -41,8 +41,14 @@ def get_google_pic(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
     else:
         args = context.args
-        if len(args) > 1 and isinstance(args[-1], int):
-            index = int(args.pop())
+
+        if len(args) >1:
+            try:
+                int(args[-1])
+                index = int(args.pop())
+            except ValueError:
+                index = random.randint(10)
+                index += 1
         else:
             index = random.randint(10)
             index += 1
