@@ -97,7 +97,7 @@ def get_bing_pic(update, context):
             
         keyword = ' '.join(args)
 
-        querystring = {"q":keyword}
+        querystring = {"safeSearch":"Off","q":keyword}
 
         headers = {
             'x-rapidapi-host': "bing-image-search1.p.rapidapi.com",
