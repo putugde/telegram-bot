@@ -6,6 +6,8 @@ from sln import Selenium
 
 from numpy import random
 
+import requests
+
 from telegram.ext import Updater
 from telegram.ext import CommandHandler, MessageHandler, Filters
 
@@ -72,6 +74,56 @@ def get_google_pic(update, context):
                 error_text = 'image not found'
                 context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
 
+def get_bing_pic(update, context):
+    if len(context.args) == 0:
+        error_text = 'wrong arguments, try /bimg <keyword> <index>'
+        context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
+    else:    
+        url = "https://bing-image-search1.p.rapidapi.com/images/search"
+
+        # Getting keyword and index
+        args = context.args
+
+        if len(args) >1:
+            try:
+                int(args[-1])
+                index = int(args.pop())
+            except ValueError:
+                index = random.randint(10)
+                index += 1
+        else:
+            index = random.randint(10)
+            index += 1
+            
+        keyword = ' '.join(args)
+
+        querystring = {"q":keyword}
+
+        headers = {
+            'x-rapidapi-host': "bing-image-search1.p.rapidapi.com",
+            'x-rapidapi-key': os.getenv("RAPID_API_TOKEN")
+            }
+
+        logger.info(f"BingImage : {keyword} -- {index}")
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        
+        res = response.json()
+
+        try:
+            img = res["value"][index]
+
+            img_caption = img["name"]
+            imgurl = img["contentUrl"]
+            text = img_caption
+            context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+            context.bot.send_photo(chat_id=update.effective_chat.id, photo=imgurl)
+        except IndexError:
+            error_text = 'image not found'
+            context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
+        except KeyError:
+            error_text = 'api error'
+            context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
+
 def main():
     start_handler = CommandHandler('start', start)
     dispatcher.add_handler(start_handler)
@@ -85,6 +137,9 @@ def main():
 
     gimg_handler = CommandHandler('gimg', get_google_pic)
     dispatcher.add_handler(gimg_handler)
+
+    bimg_handler = CommandHandler('bimg', get_bing_pic)
+    dispatcher.add_handler(bimg_handler)
 
     logger.info('Start Pooling..')
     updater.start_polling()

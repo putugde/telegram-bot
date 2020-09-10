@@ -3,3 +3,4 @@
 .env
 deployment.txt
 selenium_test.py
+test.json
