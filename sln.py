@@ -24,6 +24,8 @@ class Selenium():
         self.driver = webdriver.Chrome(options=chrome_options)
 
     def search_gimg(self, keyword, index):
+        self.start()
+
         logger.info(f'Search google image with keyword {keyword} and index {index}')
         self.driver.get("https://image.google.com")
         
@@ -43,6 +45,8 @@ class Selenium():
 
             if chosen_image:
                 imgurl = chosen_image.get_attribute("href")
+                caption_obj = self.driver.find_element(By.XPATH, f'/html/body/div[2]/c-wiz/div[3]/div[1]/div/div/div/div/div[1]/div[1]/div[{index}]/a[1]/div[1]/img')
+                caption = caption_obj.get_attribute("alt")
                 break
             else:
                 # Get scroll height
@@ -71,7 +75,9 @@ class Selenium():
         parsed_url = ((imgurl[37:]).split("&imgrefurl="))[0]
         parsed_url = unquote(parsed_url)
 
-        return parsed_url
+        self.close()
+
+        return parsed_url, caption
     
     def close(self):
         self.driver.close()

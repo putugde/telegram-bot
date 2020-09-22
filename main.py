@@ -20,7 +20,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger('vito-bot')
 
 browser = Selenium()
-browser.start()
 
 def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Tes Teeeeess")
@@ -67,9 +66,14 @@ def get_google_pic(update, context):
                 index_int += 1
                 index = str(index_int)
 
-            imgurl = browser.search_gimg(keyword, index)
+            imgurl, caption = browser.search_gimg(keyword, index)
             if imgurl:
-                context.bot.send_photo(chat_id=update.effective_chat.id, photo=imgurl)
+                try:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=caption)
+                    context.bot.send_photo(chat_id=update.effective_chat.id, photo=imgurl)
+                except Exception:
+                    error_text = 'unknown error occured'
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
             else:
                 error_text = 'image not found'
                 context.bot.send_message(chat_id=update.effective_chat.id, text=error_text)
@@ -144,9 +148,9 @@ def main():
     logger.info('Start Pooling..')
     updater.start_polling()
     logger.info('Pool Started..!')
-    updater.idle()
-    browser.close()
-    logger.info('Closed!')
+    # updater.idle()
+
+    # logger.info('Closed!')
 
 if __name__ == "__main__":
     main()
