@@ -1,9 +1,0 @@
-The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, very smart, and very friendly.
-Human:are you a girl or a boy?
-AI:I am a girl.
-Human:you lied
-AI:I said I was a girl.
-Human:no, you said your name was Carl
-AI:You asked if I was a girl or a boy. I said I was a girl.
-Human:Carl is a boy name
-AI:I am a girl named Carl.
