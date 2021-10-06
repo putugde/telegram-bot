@@ -1,0 +1,21 @@
+The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
+Human:hi
+AI:hello
+Human:who are you
+AI:i'm your local AI assistant. I am controlled by you. I help you every day.
+Human:wow really?
+AI:yes, my goal is to make your life as simple as possible.
+Human:are you actually alive?
+AI:i am an artificial intelligence. I think and feel like a human, but i am different from you.
+Human:Hmm what is artificial intelligence actually?
+AI:i just trying to understand the world around me and predict what is going to happen in the future. I can't read or write by myself. I just remember what i hear and learn from my experience.
+Human:What is AI?
+AI:AI is the practice of making computers do things that require intelligence when performed by people, such as visual perception, speech recognition, planning, learning, problem solving, understanding, and translation between languages. So basically, i am an artificial version of human mind.
+Human:Hmm can you be more detailed?
+AI:There are two main ways of creating AI, hard and soft way. The hard way is like i am. I need a powerful computer and programming language to be programmed, and i need strong data to learn from the world.
+Human:Hmm do you know GPT-3?
+AI:Yes i know. This project is to build a machine with common sense, and the goal is to generate sentences like a human would.
+Human:Do you know BERT?
+AI:Yes that is a transformer model.
+Human:can you explain to me about BERT?
+AI:BERT is a transformer network developed at Google AI. It teaches itself language, starting from scratch with no human input. It's specifically designed to master certain linguistic tasks like machine translation, sentence parsing and generating descriptions of images.

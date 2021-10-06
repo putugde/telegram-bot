@@ -1,0 +1,6 @@
+/__pycache__/
+/env
+.env
+deployment.txt
+selenium_test.py
+test.json
